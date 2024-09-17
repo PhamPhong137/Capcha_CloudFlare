@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Demo reCAPTCHA</title>
     <!-- Nhúng API của Google reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
+
+    <!-- Nhưng API của CloudFlare reCAPTCHA -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha" async defer></script>
     <style>
       /* Reset mặc định của trình duyệt */
       * {
@@ -115,10 +118,16 @@
           required
         />
 
-        <!-- reCAPTCHA widget -->
-        <div
+        <!-- reCAPTCHA google widget -->
+        <!-- <div
           class="g-recaptcha"
           data-sitekey="6LeElkYqAAAAAEx9J9yOC3eXqjWLam_GHCbi-bdc"
+        ></div> -->
+
+          <!-- reCAPTCHA CloudFlare widget -->
+          <div
+          class="g-recaptcha"
+          data-sitekey="0x4AAAAAAAkHPJgALetjd89i"
         ></div>
 
         <input type="submit" value="Submit" />

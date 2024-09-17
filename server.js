@@ -9,11 +9,13 @@ require('dotenv').config();
 const apiKey = process.env.API_KEY;
 const secretKey = process.env.SECRET_KEY; // Secret Key từ file .env
 
+
 // Sử dụng body-parser để xử lý dữ liệu form
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Tạo một route để xử lý trang chủ
 app.get('/', (req, res) => {
+    console.log(secretKey);
     res.sendFile(__dirname + '/index.html');
 });
 
@@ -26,13 +28,28 @@ app.post('/server-side-recaptcha', async (req, res) => {
         return res.status(400).send('No reCAPTCHA token provided.');
     }
 
-    const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaToken}`;
+    // Kiem tra xác thực reCAPTCHA tới Google
+    // const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaToken}`;
+
+    //Kiem tra xác thực reCAPTCHA tới CloudFlare
+    const verificationURL = `https://challenges.cloudflare.com/turnstile/v0/siteverify`;
 
     try {
-        // Gửi yêu cầu xác thực reCAPTCHA tới Google
-        const response = await axios.post(verificationURL);
+        const response = await fetch(verificationURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                secret: secretKey,
+                response: recaptchaToken,
+               
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-        if (response.data.success) {
+        const result = await response.json();
+
+        if (result.success) {
             // Nếu xác thực thành công
             res.send('reCAPTCHA verified successfully. Form submitted!');
         } else {
@@ -47,5 +64,7 @@ app.post('/server-side-recaptcha', async (req, res) => {
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+
