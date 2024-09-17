@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo reCAPTCHA</title>
+    <!-- Nhúng API của Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+      /* Reset mặc định của trình duyệt */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      form {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        max-width: 100%;
+      }
+
+      label {
+        font-size: 14px;
+        margin-bottom: 8px;
+        color: #34495e;
+        display: block;
+      }
+
+      input[type="text"],
+      input[type="email"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+      }
+
+      input[type="text"]:focus,
+      input[type="email"]:focus {
+        border-color: #3498db;
+        outline: none;
+      }
+
+      .g-recaptcha {
+        margin-bottom: 20px;
+      }
+
+      input[type="submit"] {
+        background-color: #3498db;
+        color: white;
+        padding: 12px 0;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #2980b9;
+      }
+
+      /* Thêm một chút hiệu ứng cho form */
+      form:hover {
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>reCAPTCHA Demo</h1>
+      <form action="server-side-recaptcha" method="POST">
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Enter your name"
+          required
+        />
+
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+
+        <!-- reCAPTCHA widget -->
+        <div
+          class="g-recaptcha"
+          data-sitekey="6LeElkYqAAAAAEx9J9yOC3eXqjWLam_GHCbi-bdc"
+        ></div>
+
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>
